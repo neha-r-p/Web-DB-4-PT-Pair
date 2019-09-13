@@ -32,7 +32,11 @@ exports.up = function(knex) {
 	  })
   	.createTable('steps', tbl => {
 		tbl.increments();
+		tbl.integer('step_number')
+			.unsigned()
+			.notNullable();
 		tbl.string('description', 512)
+			.notNullable();
 		tbl
 			.integer('recipe_id')
 			.unsigned()
@@ -44,5 +48,9 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  
+	return knex.schema
+		.dropTableIfExists('steps')
+		.dropTableIfExists('recipe_ingredients')
+		.dropTableIfExists('ingredients')
+		.dropTableIfExists('recipes')
 };
